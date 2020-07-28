@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>纵横中文网小说数据可视化分析</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 引入 ECharts 文件 -->
+    <script src="static/js/echarts.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="static/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/jquery-ui.css">
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="static/css/jquery.fancybox.min.css">
+
+    <link rel="stylesheet" href="static/css/bootstrap-datepicker.css">
+
+    <link rel="stylesheet" href="static/fonts/flaticon/font/flaticon.css">
+
+    <link rel="stylesheet" href="static/css/aos.css">
+
+    <link rel="stylesheet" href="static/css/style.css">
+
+  </head>
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+
+  <div id="overlayer"></div>
+  <div class="loader">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <div class="site-wrap"  id="home-section">
+
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+
+
+    <header class="site-navbar py-4 js-sticky-header site-navbar-target" role="banner">
+
+      <div class="container">
+        <div class="row align-items-center">
+
+          <div class="col-6 col-md-3 col-xl-4  d-block">
+            <h1 class="mb-0 site-logo"><a href="/home" class="text-black h2 mb-0">读你如读三月<span class="text-primary"></span> </a></h1>
+          </div>
+
+          <div class="col-12 col-md-9 col-xl-8 main-menu">
+            <nav class="site-navigation position-relative text-right" role="navigation">
+
+              <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block ml-0 pl-0">
+                <li><a href="/home" class="nav-link">首页</a></li>
+                <li class="has-children">
+                  <a href="/bangdan" class="nav-link">榜单</a>
+                  <ul class="dropdown arrow-top">
+                    <li><a href="/yuepiao" class="nav-link">月票榜</a></li>
+                    <li><a href="/xinshu" class="nav-link">新书榜</a></li>
+                    <li><a href="/dianji" class="nav-link">点击榜</a></li>
+                    <li><a href="/tuijian" class="nav-link">推荐榜</a></li>
+                    <li><a href="/24hour" class="nav-link">24小时榜</a></li>
+                  </ul>
+                </li>
+                <li><a href="/analysis" class="nav-link">分析</a></li>
+                <li><a href="/wordcloud" class="nav-link">词云</a></li>
+                <li><a href="/team" class="nav-link">我们的团队</a></li>
+              </ul>
+            </nav>
+          </div>
+
+
+          <div class="col-6 col-md-9 d-inline-block d-lg-none ml-md-0" ><a href="#" class="site-menu-toggle js-menu-toggle text-black float-right"><span class="icon-menu h3"></span></a></div>
+
+        </div>
+      </div>
+
+    </header>
+
+
+
+   <div class="feature-big">
+    <div class="site-section bg-light" id="about-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+              <h2>&nbsp</h2>
+            <h2 class="section-title mb-3">关于数据可视化分析</h2>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-lg-6" data-aos="fade-right">
+            <img src="static/images/undraw_bookmarks_r6up.svg" alt="Image" class="img-fluid">
+          </div>
+          <div class="col-lg-5 ml-auto pl-lg-5">
+            <h2 class="text-black mb-4 h3 font-weight-bold">我们的目标</h2>
+            <p class="mb-4">1.分析24小时更新榜小说类型数量</p>
+            <p class="mb-4">2.分析各小说类型所获得月票数</p>
+            <p class="mb-4">2.分析榜单中作者上榜小说的数量</p>
+             <li>目标完成情况：</li>
+            <ul class="ul-check mb-5 list-unstyled success">
+              <li>目标一</li>
+              <li>目标二</li>
+              <li>目标三</li>
+            </ul>
+            <p><a href="/wordcloud" class="btn btn-primary">了解其他</a></p>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="container">
+        <div class="row mb-5 site-section">
+          <div class="col-lg-7" data-aos="fade-right">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="main2" style="width:100% ;height:400px;"></div>
+          </div>
+          <div class="col-lg-5 pl-lg-5 ml-auto mt-md-5">
+            <h2 class="text-black">24小时更新榜 | 类型分布</h2>
+            <p class="mb-4">折线图依据纵横中文网小说24小时更新榜数据制作，分析24小时更新榜中每种类型的数量分布，帮助用户了解更新榜中各种类型的数量。</p>
+
+            <div class="author-box" data-aos="fade-left">
+              <div class="d-flex mb-4">
+                <div class="mr-3">
+                  <img src="{{ name_24h[0][9] }}">
+                </div>
+                <div class="mr-auto text-black">
+                  <strong class="font-weight-bold mb-0"><a href="{{ name_24h[0][8] }}">{{ name_24h[0][1] }}</a></strong> <br>
+                  {{ name_24h[0][2] }}
+                  {{ name_24h[0][3] }}<br>
+                  连载状态：{{ name_24h[0][4] }}
+                </div>
+              </div>
+              <blockquote>&ldquo;纵横中文网小说24h榜第一&rdquo;</blockquote>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-5 row mb-5 site-section ">
+          <div class="col-lg-7 order-1 order-lg-2" data-aos="fade-left">
+              <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+              <div id="main1" style="width:100% ;height:400px;"></div>
+          </div>
+          <div class="col-lg-5 pr-lg-5 mr-auto mt-5 order-2 order-lg-1">
+            <h2 class="text-black">月票榜 | 月票分布</h2>
+            <p class="mb-4">柱形图依据纵横中文网小说月票榜数据制作，分析月票榜中各类型月票数量的分布，帮助用户快速了解当下最热门的小说类型。</p>
+
+
+
+            <div class="author-box" data-aos="fade-right">
+              <div class="d-flex mb-4">
+                <div class="mr-3">
+                  <img src="{{ name_yuepiao[0][10] }}" alt="Image" class="img-fluid rounded-circle">
+                </div>
+                <div class="mr-auto text-black">
+                  <strong class="font-weight-bold mb-0"><a href="{{ name_yuepiao[0][9] }}">{{ name_yuepiao[0][2] }}</a></strong> <br>
+                  {{ name_yuepiao[0][3] }}
+                  {{ name_yuepiao[0][4] }}<br>
+                  连载状态：{{ name_yuepiao[0][5] }}
+                </div>
+              </div>
+              <blockquote>&ldquo;纵横中文网小说月票榜第一。&rdquo;</blockquote>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-5 site-section">
+          <div class="col-lg-7" data-aos="fade-right">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="main3" style="width:100% ;height:400px;"></div>
+          </div>
+          <div class="col-lg-5 pl-lg-5 ml-auto mt-md-5">
+            <h2 class="text-black">五个榜单 | 作者分布</h2>
+            <p class="mb-4">饼图依据月票榜、推荐榜、新书榜、点击榜、24小时更新榜五大榜单前十制作，分析上榜作者的小说进入各榜前十的数量，帮助用户了解那些作者更有实力、更受欢迎。</p>
+
+            <div class="author-box" data-aos="fade-left">
+              <div class="d-flex mb-4">
+                <div class="mr-3">
+                  <img src="http://static.zongheng.com/upload/cover/03/3b/033bfb691d626e55f78e6c7fef0a9737.jpeg" alt="Image" class="img-fluid rounded-circle">
+                </div>
+                <div class="mr-auto text-black">
+                  <strong class="font-weight-bold mb-0"><a href="http://book.zongheng.com/book/189169.html">雪中悍刀行</a></strong> <br>
+                  烽火戏诸侯 奇幻 <br>
+                  连载状态：完结
+                </div>
+              </div>
+              <blockquote>&ldquo;综合最佳。&rdquo;</blockquote>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 row mb-5 site-section ">
+          <div class="col-lg-7 order-1 order-lg-2" data-aos="fade-left">
+              <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+              <div id="main4" style="width:100% ;height:400px;"></div>
+          </div>
+          <div class="col-lg-5 pr-lg-5 mr-auto mt-5 order-2 order-lg-1">
+            <h2 class="text-black">新书榜 | 人气指数</h2>
+            <p class="mb-4">依据纵横中文网小说新书榜前十的数据制作，分析新书中最受欢迎的十本书的人气分布，帮助读者了解新书的人气。</p>
+
+
+
+            <div class="author-box" data-aos="fade-right">
+              <div class="d-flex mb-4">
+                <div class="mr-3">
+                  <img src="{{ name_yuepiao[0][10] }}" alt="Image" class="img-fluid rounded-circle">
+                </div>
+                <div class="mr-auto text-black">
+                  <strong class="font-weight-bold mb-0"><a href="{{ book[0][9] }}">{{ book[0][2] }}</a></strong> <br>
+                  {{ book[0][3] }}
+                  {{ name_yuepiao[0][4] }}<br>
+                  连载状态：{{ name_yuepiao[0][5] }}
+                </div>
+              </div>
+              <blockquote>&ldquo;纵横中文网小说新书榜榜第一。&rdquo;</blockquote>
+            </div>
+          </div>
+        </div>
+    </div>
+
+      <div class="footer py-5 text-center">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-12">
+            <p class="mb-0">
+              <a href="#" class="p-3"><span class="icon-facebook"></span></a>
+              <a href="#" class="p-3"><span class="icon-twitter"></span></a>
+              <a href="#" class="p-3"><span class="icon-instagram"></span></a>
+              <a href="#" class="p-3"><span class="icon-linkedin"></span></a>
+              <a href="#" class="p-3"><span class="icon-pinterest"></span></a>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            您可以 <a href="http://127.0.0.1:5000/static/Excel/纵横小说中文网五大榜.xls" download="bangdan.xls" >点击此处</a>下载相关文档
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- .site-wrap -->
+
+  <script src="static/js/jquery-3.3.1.min.js"></script>
+  <script src="static/js/jquery-ui.js"></script>
+  <script src="static/js/popper.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="static/js/owl.carousel.min.js"></script>
+  <script src="static/js/jquery.countdown.min.js"></script>
+  <script src="static/js/bootstrap-datepicker.min.js"></script>
+  <script src="static/js/jquery.easing.1.3.js"></script>
+  <script src="static/js/aos.js"></script>
+  <script src="static/js/jquery.fancybox.min.js"></script>
+  <script src="static/js/jquery.sticky.js"></script>
+
+
+  <script src="static/js/main.js"></script>
+
+  <script type="text/javascript">
+var dom = document.getElementById("main1");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    color: ['#3398DB'],
+    tooltip: {
+        trigger:'axis',
+        axisPointer: {
+            type:'shadow'
+        }
+
+    },
+    grid: {
+        left:'3%',
+        right:'4%',
+        bottom:'3%',
+        containLabel:true
+    },
+    xAxis: {
+        type: 'category',
+        data: {{ type|tojson }}
+    },
+    yAxis: {
+        name: '月票数',
+        type: 'value'
+    },
+    series: [{
+        data: {{ ticket_num }},
+        barWidth:'50%',
+        type: 'bar'
+    }]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+
+  <script type="text/javascript">
+var dom = document.getElementById("main2");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    color:['#'],
+     grid: {
+        left:'3%',
+        right:'4%',
+        bottom:'3%',
+        containLabel:true
+    },
+    xAxis: {
+        type: 'category',
+        data: {{ au|tojson}}
+    },
+    yAxis: {
+        name: '类型数量',
+        type: 'value'
+    },
+    series: [{
+        data: {{ anum }},
+        type: 'line',
+        smooth: true
+    }]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+
+  <script type="text/javascript">
+            var dom = document.getElementById("main3");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b} : {c} ({d}%)'
+                },
+                series: [
+                    {
+                        name: '作者',
+                        type: 'pie',
+                        radius: '75%',
+                        center: ['50%', '50%'],
+                        data: [
+                            {% for i in range(author_name|length) %}
+                            {value:{{author_num[i]|tojson}},name:{{author_name[i]|tojson}}},
+                            {% endfor %}
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 35,
+                                shadowOffsetX: 35,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            ;
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+       </script>
+
+  <script type="text/javascript">
+            var dom = document.getElementById("main4");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+
+            var hours = ['1', '2', '3', '4', '5', '6', '7',
+                                '8', '9', '10'];
+
+            var days = ['0', '20000', '40000',
+                                '60000', '80000', '100000', '120000', '140000', '160000', '180000', '200000'];
+
+            var data = [
+                {% for i in range(0,10) %}
+                [{{ renQi[i]/20000 }},{{ id[i] - 1 }},{{ 20 - id[i] }}],
+                {% endfor %}
+            ];
+
+            data = data.map(function (item) {
+                return [item[1], item[0], item[2]];
+            });
+
+            option = {
+                tooltip: {
+                    position: 'top',
+                    formatter: function (params) {
+                        return '排名：' + hours[params.value[0]];
+                    }
+                },
+                grid: {
+                    left: 2,
+                    bottom: 10,
+                    right: 10,
+                    containLabel: true
+                },
+                xAxis: {
+                    name: '排名',
+                    nameLocation: 'center',
+                    type: 'category',
+                    data: hours,
+                    boundaryGap: false,
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#999',
+                            type: 'dashed'
+                        }
+                    },
+                    axisLine: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    name: '人气指数',
+                    type: 'category',
+                    data: days,
+                    axisLine: {
+                        show: false
+                    }
+                },
+                series: [{
+                    name: 'Punch Card',
+                    type: 'scatter',
+                    symbolSize: function (val) {
+                        return val[2] * 2;
+                    },
+                    data: data,
+                    animationDelay: function (idx) {
+                        return idx * 5;
+                    }
+                }]
+            };
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+       </script>
+  </body>
+</html>
